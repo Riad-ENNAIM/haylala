@@ -3,12 +3,23 @@ const bcrypt = require('bcrypt');
 const User = require('../../modules/User');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
+const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
 
 
 exports.register = (req, res) => {
+    const {errors, isValid} = validateRegisterInput(req.body);
+
+    if(!isValid) {
+        return res.status(400).json(errors);
+    }
+
     User.findOne({email: req.body.email})
         .then(user => {
-            if(user) return res.status(400).json({email: 'Email already exists'});
+            if(user) {
+                errors.email =  'Email already exists';
+                return res.status(400).json(errors);
+            }
 
             const newUser = new User({
                 name: req.body.name,
@@ -30,13 +41,21 @@ exports.register = (req, res) => {
 };
 
 exports.login = (req, res) => {
+    const {errors, isValid} = validateLoginInput(req.body);
+
+    if(!isValid) {
+        return res.status(400).json(errors);
+    }
+
     const email = req.body.email;
     const password = req.body.password;
 
     User.findOne({email})
         .then(user => {
-            if(!user)
-                return res.status(404).json({email: 'User not found'});
+            if(!user){
+                errors.email = 'User not found';
+                return res.status(404).json(errors);
+            }
 
             bcrypt.compare(password, user.password)
                 .then(isMatch => {
@@ -56,7 +75,8 @@ exports.login = (req, res) => {
                                 })
                             });
                     } else {
-                        return res.status(400).json({password: 'Password incorrect'});
+                        errors.password = 'Password incorrect';
+                        return res.status(400).json(errors);
                     }
                 });
         });
