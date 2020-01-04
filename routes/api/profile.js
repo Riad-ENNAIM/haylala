@@ -14,7 +14,16 @@ router.get('/test', (req, res) => res.json({msg: "profile router works"}));
 router.get(
     '/',
     passport.authenticate('jwt', { session: false }),
-    profileController.profile
+    profileController.getProfile
+);
+
+// @route   POST api/profile
+// @desc    Create or edit user profile
+// @access  Private
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  profileController.createOrEditProfile
 );
 
 module.exports = router;
