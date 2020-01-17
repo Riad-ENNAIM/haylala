@@ -27,4 +27,13 @@ router.post(
   postController.createPost
 );
 
+// @route   DELETE api/posts/:id
+// @desc    Delete post
+// @access  Private
+router.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  postController.deletePost
+);
+
 module.exports = router;
