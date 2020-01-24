@@ -71,7 +71,7 @@ router.post(
 router.delete(
   '/comment/:id/:comment_id',
   passport.authenticate('jwt', { session: false }),
-  postController.deleteCommentFromPost
+  postController.removeCommentFromPost
 );
 
 module.exports = router;

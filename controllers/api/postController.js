@@ -134,7 +134,7 @@ exports.addCommentToPost = (req, res) => {
       .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
 };
 
-exports.deleteCommentFromPost = (req, res) => {
+exports.removeCommentFromPost = (req, res) => {
   Post.findById(req.params.id)
       .then(post => {
         // Check to see if comment exists
