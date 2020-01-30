@@ -23,9 +23,9 @@ router.post('/login', userController.login);
 // @desc   Return current user
 // @access Private
 router.get(
-    '/current',
-    passport.authenticate('jwt', {session: false}),
-    userController.current
+  '/current',
+  passport.authenticate('jwt', {session: false}),
+  userController.current
 );
 
 module.exports = router;
