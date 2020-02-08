@@ -26,6 +26,8 @@ exports.register = (req, res) => {
         email: req.body.email,
         password: req.body.password,
       });
+      
+      console.log(newUser)
 
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(req.body.password, salt, (err, hash) => {
