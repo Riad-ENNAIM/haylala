@@ -15,9 +15,12 @@ class Register extends Component {
       password2: '',
       errors: {}
     };
+  }
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
@@ -27,11 +30,11 @@ class Register extends Component {
     else return null;
   }
 
-  onChange(e) {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  onSubmit(e) {
+  onSubmit = (e) => {
     e.preventDefault();
 
     const newUser = {

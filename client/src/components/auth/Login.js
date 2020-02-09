@@ -12,9 +12,12 @@ class Login extends Component {
       password: '',
       errors: {}
     };
+  }
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
   }
 
   static getDerivedStateFromProps(nextProps, prevState){
@@ -28,7 +31,7 @@ class Login extends Component {
     else return null;
   }
 
-  onSubmit(e) {
+  onSubmit = (e) => {
     e.preventDefault();
 
     const userData = {
@@ -39,7 +42,7 @@ class Login extends Component {
     this.props.loginUser(userData);
   }
 
-  onChange(e) {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
