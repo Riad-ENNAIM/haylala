@@ -24,7 +24,7 @@ class Register extends Component {
     if (nextProps.errors !== prevState.errors) {
         return { errors: nextProps.errors };
     }
-    else return null; // Triggers no change in the state
+    else return null;
   }
 
   onChange(e) {
